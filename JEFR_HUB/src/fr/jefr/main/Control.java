@@ -8,31 +8,37 @@ import fr.jefr.facialrec.Image;
 import fr.jefr.gui.Window;
 
 public class Control {
+	private int indexCamera;
 	private VideoCapture cam;
 	//private Camera camera;
 	private boolean cont = true;
 	private Mat mat;
 	private Window win;
 	
-	public Control(){
+	public Control(int indexCamera){
 		//this.camera = camera;
+		this.indexCamera = indexCamera;
 		mat = new Mat();
-		this.openCam();
 		try {
+			this.openCam();
 			this.win = new Window("JEFR",this.getWidthFrame() * 2, this.getHeightFrame() + 50);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	private void openCam(){
+	private void openCam() throws Exception{
+		System.out.println("Index camera : " + this.indexCamera);
 		System.out.print("Opening camera ... ");
 		this.cam = new VideoCapture();
-		this.cam.open(1); //this.camera.getCamera_selected()
+		this.cam.open(this.indexCamera); //this.camera.getCamera_selected()
 		if (this.cam.isOpened())
 			System.out.println("DONE");
-		else
+		else{
 			System.out.println("FAILED");
+			throw new Exception("Cannot open camera " + this.indexCamera);
+		}
+			
 	}
 	
 	private void releaseCam(){

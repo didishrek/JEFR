@@ -25,7 +25,7 @@ public class ProgramArgs {
 	private void setOptions(){
 		this.options.addOption("h", "help",false, "print this message");
 		this.options.addOption("d", true, "directory pictures path");
-		//this.options.addOption("c", true, "path to configuration file");
+		this.options.addOption("c", true, "camera index (0 by default)");
 	}
 	
 	public boolean askHelp(){
@@ -33,7 +33,7 @@ public class ProgramArgs {
 			try{
 				if (this.cmd.hasOption("h")){
 					HelpFormatter formatter = new HelpFormatter();
-					formatter.printHelp( "JEFR", options, true );
+					formatter.printHelp("JEFR", options, true );
 					return (true);
 				}
 			} catch(Exception e){

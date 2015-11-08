@@ -1,5 +1,7 @@
 package fr.jefr.main;
 
+import javax.swing.plaf.synth.SynthSeparatorUI;
+
 import org.opencv.videoio.VideoCapture;
 
 import fr.jefr.facialrec.Camera;
@@ -27,7 +29,16 @@ public class JEFR_main {
 			return;
 		loadOpenCv();
 		
-		Control cont = new Control();
+		int indexCamera = 0;
+		try{
+			if (pa.getArgs().hasOption("c")){
+				indexCamera = Integer.parseInt(pa.getArgs().getOptionValue("c"));
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		Control cont = new Control(indexCamera);
 		try {
 			cont.exec();
 		} catch (Exception e) {
