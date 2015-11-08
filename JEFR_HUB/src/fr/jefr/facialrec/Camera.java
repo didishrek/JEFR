@@ -24,7 +24,6 @@ public class Camera {
 		while (tmp.open(i)){
 			cam.add(Integer.toString(i));
 			tmp.release();
-			//System.out.println(tmp.isOpened());
 			i++;
 		}
 		count_camera = i;

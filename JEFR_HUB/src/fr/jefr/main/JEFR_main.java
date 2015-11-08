@@ -27,20 +27,13 @@ public class JEFR_main {
 			return;
 		loadOpenCv();
 		
-		Camera cam = new Camera();
-		cam.selectCamera();
-		if(cam.getCamera_selected() == -10)
-			return ;
-		VideoCapture tmp = new VideoCapture();
-		tmp.open(cam.getCamera_selected());
-		System.out.println(tmp.isOpened());
-
-		
-		
-		
-		Window jefrWindow = new Window("JEFR", 800, 600);
-
-		
+		Control cont = new Control();
+		try {
+			cont.exec();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
