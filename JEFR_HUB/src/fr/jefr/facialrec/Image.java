@@ -11,11 +11,11 @@ import org.opencv.core.Mat;
 
 public class Image extends JPanel{
 	BufferedImage img;
-	
+
 	@Override
-    public void paint(Graphics g) {
-        g.drawImage(this.img, 0, 0, this);
-    }
+	public void paint(Graphics g) {
+		g.drawImage(this.img, 0, 0, this);
+	}
 
 	public Mat reverseMat(Mat frame){
 		Mat tmp = new Mat();
@@ -27,20 +27,19 @@ public class Image extends JPanel{
 		}
 		return (tmp);
 	}
-	
+
 	public void MatToBufferedImage(Mat frame) {
-		//frame = this.reverseMat(frame);
-        int type = 0;
-        if (frame.channels() == 1) {
-            type = BufferedImage.TYPE_BYTE_GRAY;
-        } else if (frame.channels() == 3) {
-            type = BufferedImage.TYPE_3BYTE_BGR;
-        }
-        BufferedImage image = new BufferedImage(frame.width(), frame.height(), type);
-        WritableRaster raster = image.getRaster();
-        DataBufferByte dataBuffer = (DataBufferByte) raster.getDataBuffer();
-        byte[] data = dataBuffer.getData();
-        frame.get(0, 0, data);
-        this.img = image;
-    }
+		int type = 0;
+		if (frame.channels() == 1) {
+			type = BufferedImage.TYPE_BYTE_GRAY;
+		} else if (frame.channels() == 3) {
+			type = BufferedImage.TYPE_3BYTE_BGR;
+		}
+		BufferedImage image = new BufferedImage(frame.width(), frame.height(), type);
+		WritableRaster raster = image.getRaster();
+		DataBufferByte dataBuffer = (DataBufferByte) raster.getDataBuffer();
+		byte[] data = dataBuffer.getData();
+		frame.get(0, 0, data);
+		this.img = image;
+	}
 }

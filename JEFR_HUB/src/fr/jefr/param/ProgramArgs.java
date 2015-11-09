@@ -10,7 +10,7 @@ import org.apache.commons.cli.ParseException;
 public class ProgramArgs {
 	private Options options = new Options();
 	private CommandLine cmd;
-	
+
 	public ProgramArgs(String[] args){
 		this.setOptions();
 		try {
@@ -21,13 +21,13 @@ public class ProgramArgs {
 			System.out.println("Unexpected exception:" + e.getMessage());
 		}
 	}
-	
+
 	private void setOptions(){
 		this.options.addOption("h", "help",false, "print this message");
 		this.options.addOption("d", true, "directory pictures path");
 		this.options.addOption("c", true, "camera index (0 by default)");
 	}
-	
+
 	public boolean askHelp(){
 		if (cmd != null){
 			try{
@@ -42,9 +42,9 @@ public class ProgramArgs {
 		}
 		return (false);
 	}
-	
+
 	public CommandLine getArgs(){
 		return (this.cmd);
 	}
-	
+
 }

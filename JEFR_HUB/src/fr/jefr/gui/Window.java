@@ -18,7 +18,7 @@ public class Window extends JFrame{
 	private JPanel board;
 	private JPanel info;
 	private JPanel screen;
-	
+
 	public Window(String title, int sizex, int sizey){
 		String end;
 		System.out.print("Create Window : " + title + " ... ");
@@ -31,15 +31,15 @@ public class Window extends JFrame{
 			contentPane.setBorder(new EmptyBorder(1, 1, 1, 1));
 			setContentPane(contentPane);
 			contentPane.setLayout(new GridLayout(1, 0, 0, 0));
-			
+
 			board = new JPanel();
 			contentPane.add(board);
 			board.setLayout(new BorderLayout(0, 0));
-			
+
 			screen = new JPanel();
 			screen.setLayout(new GridLayout(1, 2));
 			board.add(screen, BorderLayout.CENTER);
-			
+
 			info = new JPanel();
 			contentPane.add(info);
 			end = "DONE";
@@ -57,7 +57,7 @@ public class Window extends JFrame{
 		this.screen.repaint();
 		this.contentPane.repaint();
 	}
-	
+
 	public JPanel getScreen() {
 		return screen;
 	}
@@ -69,10 +69,7 @@ public class Window extends JFrame{
 	public JPanel getInfo() {
 		return info;
 	}
-	
-//	public void repaintContentPane(){
-//		this.contentPane.repaint();
-//	}
-	
-	
+
+
+
 }

@@ -2,6 +2,7 @@ package fr.jefr.main;
 
 import javax.swing.plaf.synth.SynthSeparatorUI;
 
+import org.opencv.core.Core;
 import org.opencv.videoio.VideoCapture;
 
 import fr.jefr.facialrec.Camera;
@@ -10,12 +11,12 @@ import fr.jefr.gui.*;
 import fr.jefr.param.ProgramArgs;
 
 public class JEFR_main {	
-	
+
 	private static void loadOpenCv(){
 		String end;
 		try{
 			System.out.print("Loading OpenCv ... ");
-			System.loadLibrary("opencv_java300");
+			System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 			end = "DONE";
 		} catch (Exception e){
 			end = "FAILED";
@@ -23,13 +24,14 @@ public class JEFR_main {
 		}
 		System.out.println(end);
 	}
-	
+
 	public static void main(String[] args) {
 		ProgramArgs pa = new ProgramArgs(args);
 		if (pa.askHelp())
 			return;
+		//System.out.println(System.getProperty("java.library.path"));
 		loadOpenCv();
-		
+
 		int indexCamera = 0;
 		try{
 			if (pa.getArgs().hasOption("c")){
@@ -38,9 +40,20 @@ public class JEFR_main {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+
+		String pathReference = "";
+		try{
+			if (pa.getArgs().hasOption("d")){
+				pathReference = pa.getArgs().getOptionValue("d");
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		System.out.println("path => " + pathReference);
+
 		Recognition reco = new Recognition();
-		
-		Control cont = new Control(indexCamera, reco);
+
+		Control cont = new Control(indexCamera, reco, pathReference);
 		try {
 			cont.exec();
 		} catch (Exception e) {

@@ -9,6 +9,7 @@ import fr.jefr.facialrec.Recognition;
 import fr.jefr.gui.Window;
 
 public class Control {
+	private String pathReference;
 	private Recognition reco;
 	private int indexCamera;
 	private VideoCapture cam;
@@ -16,10 +17,12 @@ public class Control {
 	private boolean cont = true;
 	private Mat mat;
 	private Window win;
-	
-	public Control(int indexCamera, Recognition reco){
+
+	public Control(int indexCamera, Recognition reco, String pathReference){
 		//this.camera = camera;
+		this.pathReference = pathReference;
 		this.reco = reco;
+		this.reco.setPathReference(this.pathReference);
 		this.indexCamera = indexCamera;
 		mat = new Mat();
 		try {
@@ -29,7 +32,7 @@ public class Control {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void openCam() throws Exception{
 		System.out.println("Index camera : " + this.indexCamera);
 		System.out.print("Opening camera ... ");
@@ -41,27 +44,27 @@ public class Control {
 			System.out.println("FAILED");
 			throw new Exception("Cannot open camera " + this.indexCamera);
 		}
-			
+
 	}
-	
+
 	private void releaseCam(){
 		this.cam.release();
 	}
-	
+
 	private int getHeightFrame() throws Exception{
 		if (cam.read(mat))
 			return (mat.height());
 		else
 			throw new Exception("Cant read camera height.");
 	}
-	
+
 	private int getWidthFrame() throws Exception{
 		if (cam.read(mat))
 			return (mat.width());
 		else
 			throw new Exception("Cant read camera width.");
 	}
-	
+
 	public void exec() throws Exception{
 		boolean visible = false;
 		while(cont){
