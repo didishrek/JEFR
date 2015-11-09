@@ -1,6 +1,7 @@
 package fr.jefr.facialrec;
 
-import org.opencv.core.Core;
+import java.awt.Color;
+
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfRect;
 import org.opencv.core.Point;
@@ -17,7 +18,6 @@ public class Recognition {
 		 System.out.print("Loading CascadeClassifier ... ");
 		 try{
 			 faceDetector = new CascadeClassifier(Recognition.class.getResource("/fr/jefr/resources/haarcascade_frontalface_alt.xml").getPath());
-			 //faceDetector.load(Recognition.class.getResource("/fr/jefr/resources/haarcascade_frontalface_alt.xml").getPath());
 			 if (faceDetector.empty())
 				 throw new Exception("Cannot load CascadeClassifier");
 			 else
@@ -32,7 +32,7 @@ public class Recognition {
 	 public Mat recognition(Mat frame){
 		 faceDetector.detectMultiScale(frame, faceDetection);
 		 for (Rect rect : faceDetection.toArray()) {
-			 //System.out.println(rect);
+			 Imgproc.putText(frame, "test", new Point(rect.x, rect.y - 10), 0, 1.0, new Scalar(0, 255,0));
 			 Imgproc.rectangle(frame, new Point(rect.x, rect.y), new Point(rect.x + rect.width, rect.y + rect.height), new Scalar(0, 255,0));
           }
 		 return (frame);

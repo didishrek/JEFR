@@ -38,8 +38,6 @@ public class JEFR_main {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		
-		
 		Recognition reco = new Recognition();
 		
 		Control cont = new Control(indexCamera, reco);
