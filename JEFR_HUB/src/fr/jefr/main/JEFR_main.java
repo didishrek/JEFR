@@ -5,6 +5,7 @@ import javax.swing.plaf.synth.SynthSeparatorUI;
 import org.opencv.videoio.VideoCapture;
 
 import fr.jefr.facialrec.Camera;
+import fr.jefr.facialrec.Recognition;
 import fr.jefr.gui.*;
 import fr.jefr.param.ProgramArgs;
 
@@ -38,7 +39,10 @@ public class JEFR_main {
 			e.printStackTrace();
 		}
 		
-		Control cont = new Control(indexCamera);
+		
+		Recognition reco = new Recognition();
+		
+		Control cont = new Control(indexCamera, reco);
 		try {
 			cont.exec();
 		} catch (Exception e) {

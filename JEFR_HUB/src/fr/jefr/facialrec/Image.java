@@ -12,20 +12,12 @@ import org.opencv.core.Mat;
 public class Image extends JPanel{
 	BufferedImage img;
 	
-	public Image() {
-		// TODO Auto-generated constructor stub
-	}
-	
-//	public Image(BufferedImage img){
-//		this.img = img;
-//	}
-	
 	@Override
     public void paint(Graphics g) {
         g.drawImage(this.img, 0, 0, this);
     }
 
-	private Mat reverseMat(Mat frame){
+	public Mat reverseMat(Mat frame){
 		Mat tmp = new Mat();
 		int j = 0;
 		frame.copyTo(tmp);
@@ -37,7 +29,7 @@ public class Image extends JPanel{
 	}
 	
 	public void MatToBufferedImage(Mat frame) {
-		frame = this.reverseMat(frame);
+		//frame = this.reverseMat(frame);
         int type = 0;
         if (frame.channels() == 1) {
             type = BufferedImage.TYPE_BYTE_GRAY;
@@ -50,6 +42,5 @@ public class Image extends JPanel{
         byte[] data = dataBuffer.getData();
         frame.get(0, 0, data);
         this.img = image;
-        this.repaint();
     }
 }

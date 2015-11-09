@@ -5,9 +5,11 @@ import org.opencv.videoio.VideoCapture;
 
 import fr.jefr.facialrec.Camera;
 import fr.jefr.facialrec.Image;
+import fr.jefr.facialrec.Recognition;
 import fr.jefr.gui.Window;
 
 public class Control {
+	private Recognition reco;
 	private int indexCamera;
 	private VideoCapture cam;
 	//private Camera camera;
@@ -15,8 +17,9 @@ public class Control {
 	private Mat mat;
 	private Window win;
 	
-	public Control(int indexCamera){
+	public Control(int indexCamera, Recognition reco){
 		//this.camera = camera;
+		this.reco = reco;
 		this.indexCamera = indexCamera;
 		mat = new Mat();
 		try {
@@ -64,7 +67,7 @@ public class Control {
 		while(cont){
 			if (cam.read(mat)){
 				Image img = new Image();
-				img.MatToBufferedImage(mat);
+				img.MatToBufferedImage(reco.recognition(img.reverseMat(mat)));
 				win.repaintScreen(img);
 				if (!visible){
 					System.out.println("READY");
