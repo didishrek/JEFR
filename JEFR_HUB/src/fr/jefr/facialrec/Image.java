@@ -2,8 +2,6 @@ package fr.jefr.facialrec;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
-import java.awt.image.WritableRaster;
 
 import javax.swing.JPanel;
 
@@ -13,6 +11,10 @@ import org.bytedeco.javacv.Java2DFrameConverter;
 
 
 public class Image extends JPanel{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9177571833881594042L;
 	protected BufferedImage img;
 	private Java2DFrameConverter fconv;
 	

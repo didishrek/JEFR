@@ -1,14 +1,14 @@
 package fr.jefr.facialrec;
 
-import java.awt.Color;
 import java.io.File;
 
-import org.bytedeco.javacpp.Loader;
 import org.bytedeco.javacpp.opencv_core.CvMemStorage;
 import org.bytedeco.javacpp.opencv_core.CvRect;
 import org.bytedeco.javacpp.opencv_core.CvScalar;
 import org.bytedeco.javacpp.opencv_core.CvSeq;
 import org.bytedeco.javacpp.opencv_core.IplImage;
+import org.bytedeco.javacpp.opencv_face.FaceRecognizer;
+import org.bytedeco.javacpp.opencv_face.LBPHFaceRecognizer;
 import org.bytedeco.javacpp.opencv_objdetect.CvHaarClassifierCascade;
 
 import static org.bytedeco.javacpp.helper.opencv_objdetect.cvHaarDetectObjects;
@@ -25,8 +25,10 @@ public class Recognition {
 	private String pathReference = "";
 	private CvMemStorage storage;
 	private IplImage greyImage = null;
+	FaceRecognizer reco;
 
-	public Recognition(){
+	public Recognition(String pathReference){
+		this.pathReference = pathReference;
 		System.out.print("Loading CascadeClassifier ... ");
 		File file = new File(Recognition.class.getResource("/haarcascade_frontalface_alt_old.xml").getPath());
 		try{
@@ -39,8 +41,11 @@ public class Recognition {
 			System.out.println("FAILED");
 			e.printStackTrace();
 		}
-		System.out.println("==> " + file);
+		System.out.println("==> " + file); 
 		this.storage = CvMemStorage.create();
+		reco = new LBPHFaceRecognizer();
+		FaceTrainLoader ftl = new FaceTrainLoader(pathReference);
+		
 	}
 
 	public void setGrey(int width, int height){
@@ -59,12 +64,13 @@ public class Recognition {
 			CvRect r = new CvRect(cvGetSeqElem(faces, i));
 			int x = r.x(), y = r.y(), w = r.width(), h = r.height();
 			cvRectangle(img, cvPoint(x, y), cvPoint(x+w, y+h), CvScalar.RED, 1, CV_AA, 0);
+			r.close();
 		}
 		return (img);
 	}
 
-	public void setPathReference(String pathReference) {
-		this.pathReference = pathReference;
-	}
+//	public void setPathReference(String pathReference) {
+//		this.pathReference = pathReference;
+//	}
 
 }

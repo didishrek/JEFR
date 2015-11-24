@@ -5,7 +5,6 @@ import org.bytedeco.javacpp.Loader;
 import org.bytedeco.javacpp.opencv_objdetect;
 
 import fr.jefr.facialrec.Recognition;
-import fr.jefr.gui.*;
 import fr.jefr.param.ProgramArgs;
 
 public class JEFR_main {	
@@ -51,10 +50,9 @@ public class JEFR_main {
 		}
 		System.out.println("path => " + pathReference);
 
-		Recognition reco = new Recognition();
+		Recognition reco = new Recognition(pathReference);
 
-		Control cont = new Control(indexCamera, reco, pathReference);
-		//Control cont = new Control(indexCamera, null, pathReference);
+		Control cont = new Control(indexCamera, reco);
 		try {
 			cont.exec();
 		} catch (Exception e) {

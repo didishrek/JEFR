@@ -12,7 +12,6 @@ import fr.jefr.facialrec.Recognition;
 import fr.jefr.gui.Window;
 
 public class Control {
-	private String pathReference;
 	private Recognition reco;
 	private int indexCamera;
 	private FrameGrabber cam;
@@ -24,10 +23,8 @@ public class Control {
 	private Mat mat;
 	private Image img;
 	
-	public Control(int indexCamera, Recognition reco, String pathReference){
-		this.pathReference = pathReference;
+	public Control(int indexCamera, Recognition reco){
 		this.reco = reco;
-		this.reco.setPathReference(this.pathReference);
 
 		this.indexCamera = indexCamera;
 		this.mat = new Mat();
@@ -55,17 +52,14 @@ public class Control {
 	}
 
 	private int getHeightFrame() throws Exception{
-		System.out.println("height = " + this.cam.getImageHeight());
 		return (this.cam.getImageHeight());
 	}
 
 	private int getWidthFrame() throws Exception{
-		System.out.println("width = " + this.cam.getImageWidth());
 		return (this.cam.getImageWidth());
 	}
 
 	public void exec() throws Exception{
-		boolean visible = false;
 		this.win.setVisible(true);
 		while(cont){
 			 this.mat = convmat.convert(this.cam.grab());
