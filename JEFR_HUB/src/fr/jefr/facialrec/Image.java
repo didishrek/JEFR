@@ -7,10 +7,18 @@ import java.awt.image.WritableRaster;
 
 import javax.swing.JPanel;
 
-import org.opencv.core.Mat;
+import org.bytedeco.javacpp.opencv_core.Mat;
+import org.bytedeco.javacv.Frame;
+import org.bytedeco.javacv.Java2DFrameConverter;
+
 
 public class Image extends JPanel{
-	BufferedImage img;
+	protected BufferedImage img;
+	private Java2DFrameConverter fconv;
+	
+	public Image(){
+		fconv = new Java2DFrameConverter();
+	}
 
 	@Override
 	public void paint(Graphics g) {
@@ -21,25 +29,14 @@ public class Image extends JPanel{
 		Mat tmp = new Mat();
 		int j = 0;
 		frame.copyTo(tmp);
-		for (int i = frame.width() -1; i >= 0; i--){
+		for (int i = frame.arrayWidth() -1; i >= 0; i--){
 			frame.col(i).copyTo(tmp.col(j));
 			j++;
 		}
 		return (tmp);
 	}
 
-	public void MatToBufferedImage(Mat frame) {
-		int type = 0;
-		if (frame.channels() == 1) {
-			type = BufferedImage.TYPE_BYTE_GRAY;
-		} else if (frame.channels() == 3) {
-			type = BufferedImage.TYPE_3BYTE_BGR;
-		}
-		BufferedImage image = new BufferedImage(frame.width(), frame.height(), type);
-		WritableRaster raster = image.getRaster();
-		DataBufferByte dataBuffer = (DataBufferByte) raster.getDataBuffer();
-		byte[] data = dataBuffer.getData();
-		frame.get(0, 0, data);
-		this.img = image;
+	public void MatToBufferedImage(Frame frame) {
+		this.img = fconv.convert(frame);
 	}
 }
