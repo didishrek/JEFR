@@ -3,12 +3,15 @@ package fr.jefr.facialrec;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FilenameFilter;
+import java.nio.IntBuffer;
 import java.util.Vector;
 
 import static org.bytedeco.javacpp.opencv_core.*;
+import static org.bytedeco.javacpp.opencv_face.createLBPHFaceRecognizer;
 import static org.bytedeco.javacpp.opencv_imgcodecs.*;
 import static org.bytedeco.javacpp.opencv_imgproc.*;
 import org.bytedeco.javacpp.opencv_core.MatVector;
+import org.bytedeco.javacpp.opencv_face.FaceRecognizer;
 import org.bytedeco.javacv.OpenCVFrameConverter;
 
 public class FaceTrainLoader {
@@ -33,23 +36,24 @@ public class FaceTrainLoader {
 		};
 
 		File[] allimg = directory.listFiles(jpgFilter);
-
 		if (allimg == null){
 			System.out.println("pas reussie a charger les images.");
 		}
-		
-		position = new Mat(allimg.length);
+		position = new Mat(allimg.length, 1, CV_32SC1);
+		IntBuffer labelsBuf = position.getIntBuffer();
 		convmat = new OpenCVFrameConverter.ToMat();
 		images = new MatVector(allimg.length);
 		System.out.println("Loading files ...");
 		int i = 0;
-		IplImage img; 
+		Mat img; 
 		for (File image : allimg) {
 			try {
-				img = cvLoadImage(image.getAbsolutePath(), CV_BGR2GRAY);
+				img = imread(image.getAbsolutePath(), CV_LOAD_IMAGE_GRAYSCALE);
 				labels.add(i, image.getName().substring(0, image.getName().length() - 4));
-				System.out.println(image.getName());
-				images.put((long)i, convmat.convert(convmat.convert(img)));
+				System.out.println(i + " - " + image.getName());
+				labelsBuf.put(i, i);
+				
+				images.put(i, img);
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -66,4 +70,11 @@ public class FaceTrainLoader {
 		return (String [])labels.toArray();
 	}
 
+	public Mat getPosition(){
+		return position;
+	}
+	
+	public String getName(int id){
+		return (labels.elementAt(id));
+	}
 }

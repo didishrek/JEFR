@@ -63,9 +63,11 @@ public class Control {
 		this.win.setVisible(true);
 		while(cont){
 			 this.mat = convmat.convert(this.cam.grab());
-			 this.grabbedImage = this.converter.convert(this.converter.convert(this.img.reverseMat(this.mat)));
-			 this.grabbedImage = this.reco.recognition(this.grabbedImage);
-			 this.img.MatToBufferedImage(this.converter.convert(this.grabbedImage));
+			 //this.grabbedImage = this.converter.convert(this.converter.convert(this.img.reverseMat(this.mat)));
+			 //this.grabbedImage = this.reco.recognition(this.grabbedImage);
+			 this.mat = this.reco.recognition(this.img.reverseMat(this.mat));
+			 this.img.MatToBufferedImage(this.converter.convert(this.mat));
+			 //this.img.MatToBufferedImage(this.converter.convert(this.grabbedImage));
 			 this.win.repaintScreen(this.img);
 		}
 		this.releaseCam();
