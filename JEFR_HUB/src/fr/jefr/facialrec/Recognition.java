@@ -45,7 +45,7 @@ public class Recognition {
 		this.storage = CvMemStorage.create();
 		reco = new LBPHFaceRecognizer();
 		FaceTrainLoader ftl = new FaceTrainLoader(pathReference);
-		
+		//reco.train(ftl.getImages(), ftl.getLabels());
 	}
 
 	public void setGrey(int width, int height){
